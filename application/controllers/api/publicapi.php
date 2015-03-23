@@ -22,7 +22,7 @@ class publicapi extends Backend_Controller {
         $passwd = $row['passwd'];
         $user = $this->userModel->login($userName, $passwd);
         if ($user === false) {
-            echo json_encode(array('result' => false, 'message' => 'UserName Or Passowrd is Invalid'));
+            echo json_encode(array('result' => false, 'message' => 'Username and/or password is invalid'));
         } else {
             $this->userModel->updateUser($user['id'], array(
                 'token' => generator_random_string(),
