@@ -35,7 +35,7 @@ class stream extends Backend_Controller {
 
     public function updatestream() {
         $param = $_REQUEST;
-        $id = $param['id'];      
+        $id = $param['stream_id'];      
         $stream = array();        
         if(isset($param['title'])){
             $stream['title'] = $param['title'];
@@ -55,7 +55,7 @@ class stream extends Backend_Controller {
 
     public function deletestream() {
         $param = $_REQUEST;
-        $id = $param['id'];
+        $id = $param['stream_id'];
         $this->load->model('streams_m', 'streamModel');
         $this->streamModel->deleteStream($id);
         echo json_encode(array('result' => true));
@@ -69,7 +69,7 @@ class stream extends Backend_Controller {
 
     public function getstreambyid() {
         $param = $_REQUEST;
-        $id = $param['id'];
+        $id = $param['stream_id'];
         $this->load->model('streams_m', 'streamModel');
         $stream =$this->streamModel->getStreamById($id);
         echo json_encode(array('result' => true, 'object'=>$stream));
@@ -90,7 +90,7 @@ class stream extends Backend_Controller {
 
     public function sharestream() {
         $param = $_REQUEST;
-        $id = $param['id'];
+        $id = $param['stream_id'];
         if (isset($param['user_id'])) {
             $userId = $param['user_id'];
         } else {
@@ -102,7 +102,7 @@ class stream extends Backend_Controller {
 
     public function inviteusers() {
         $param = $_REQUEST;
-        $id = $param['id'];        
+        $id = $param['stream_id'];        
         $userIds = $param['user_ids'];
         $userIds = explode(',', $userIds);
         $this->load->model('stream_users_m', 'streamUserModel');
