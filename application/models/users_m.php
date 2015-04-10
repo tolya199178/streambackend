@@ -86,10 +86,14 @@ class users_m extends CI_Model {
     
     
     public function getUsersByIds($ids){
-        $sql = sprintf(
-                "SELECT * FROM %s WHERE id IN (%s) ORDER BY `created_date` ASC", self::T_NAME,  implode(',', $ids)
-        );
-        return $this->db->query($sql)->result_array();
+		if(count($ids) > 0){
+			$sql = sprintf(
+                "SELECT * FROM %s WHERE id IN (%s) ORDER BY `created_date` ASC", self::T_NAME,  implode(',', $ids)				
+			);
+			return $this->db->query($sql)->result_array();        
+		}else{
+			return array();
+		}        
     }
     /**
      * @decription  
