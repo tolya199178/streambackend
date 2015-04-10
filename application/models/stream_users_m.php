@@ -21,9 +21,13 @@ class stream_users_m extends CI_Model {
         if ($onlyKeys == true) {
             return $userIds;
         } else {
-            $this->load->model('users_m', 'userModel');
-            $users = $this->userModel->getUsersByIds($userIds);
-            return $users;
+			if(count($userIds) > 0){
+				$this->load->model('users_m', 'userModel');
+				$users = $this->userModel->getUsersByIds($userIds);
+				return $users;
+			}else{
+				return array();
+			}            
         }
     }
 
