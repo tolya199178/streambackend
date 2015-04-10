@@ -53,7 +53,7 @@ class streams_m extends CI_Model {
     
     public function getStreamsByUserId($userId){
         $sql = sprintf(
-                "SELECT * FROM %s WHERE user_id=%d", self::T_NAME,$userId
+                "SELECT T1.* , T2.first_name AS first_name, T2.last_name AS last_name, T2.login_name AS login_name FROM %s AS T1 INNER JOIN users AS T2 ON T1.user_id = T2.id WHERE  T1.user_id=%d", self::T_NAME, $userId
         );
         return $this->db->query($sql)->result_array();
     }
