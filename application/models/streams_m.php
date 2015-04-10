@@ -28,7 +28,7 @@ class streams_m extends CI_Model {
 
     public function getStreamById($streamId){
         $sql = sprintf(
-                "SELECT * FROM %s WHERE 1 AND id='%d'", self::T_NAME, $streamId
+                "SELECT T1.* , T2.first_name AS first_name, T2.last_name AS last_name, T2.login_name AS login_name FROM %s AS T1 INNER JOIN users AS T2 ON T1.user_id = T2.id WHERE 1 AND T1.id='%d'", self::T_NAME, $streamId
         );
         $stream = $this->db->query($sql)->row_array();
         
@@ -46,7 +46,7 @@ class streams_m extends CI_Model {
      */
     public function getAllStream(){
         $sql = sprintf(
-                "SELECT * FROM %s WHERE 1 ORDER BY `created_date` ASC", self::T_NAME
+                "SELECT T1.* , T2.first_name AS first_name, T2.last_name AS last_name, T2.login_name AS login_name FROM %s AS T1 INNER JOIN users AS T2 ON T1.user_id = T2.id ORDER BY T1.`created_date` ASC", self::T_NAME
         );
         return $this->db->query($sql)->result_array();
     }
