@@ -31,7 +31,9 @@ class streams_m extends CI_Model {
                 "SELECT T1.* , T2.first_name AS first_name, T2.last_name AS last_name, T2.login_name AS login_name FROM %s AS T1 INNER JOIN users AS T2 ON T1.user_id = T2.id WHERE 1 AND T1.id='%d'", self::T_NAME, $streamId
         );
         $stream = $this->db->query($sql)->row_array();
-        
+        if(count($stream) ==0){
+			return array();
+		}
         
         $this->load->model('stream_users_m');
         $stream['stream_members'] = $this->stream_users_m->getAssignedUsers($stream['id'], false);        
