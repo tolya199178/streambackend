@@ -28,6 +28,24 @@ class follow extends Backend_Controller {
         }
         echo json_encode(array('result' => true));
     }
+	
+	
+	public function ussetfollowuser(){
+		$param =  $_REQUEST;
+        if(isset($param['user_id'])){
+            $user_id = $param['user_id'];
+        }else{
+            $user = $this->getUser();
+            $user_id = $user['id'];
+        }
+        $followIds = $param['follow_ids'];
+        $followIds = explode(',', $followIds);        
+        $this->load->model('user_follows_m', 'folowModel');
+        foreach($followIds as $followId){
+            $this->folowModel->unfollow($user_id, $followId);
+        }
+        echo json_encode(array('result' => true));
+	}
     
     
     public function getfollowuser(){

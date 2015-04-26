@@ -15,6 +15,24 @@ class user extends Backend_Controller {
     public function getuserlist() {
         $this->load->model('users_m', 'userModel');
         $users = $this->userModel->getUserList();
+		
+		$currentUser = $this->getUser();        
+		if($currentUser){		
+			$user_id = $currentUser['id'];
+			$this->load->model('user_follows_m', 'folowModel');
+			$followIds = $this->folowModel->getFollowIds($user_id, true);
+			if(count($users) > 0){
+				foreach($users as &$user){
+					if(in_array($user['id'], $followIds)){
+						$user['is_following'] = true;
+					}else{
+						$user['is_following'] = false;	
+					}
+				}
+			}
+		}
+		
+		
         echo json_encode(array('result' => true, 'object' => $users));
         die();
     }
@@ -33,6 +51,20 @@ class user extends Backend_Controller {
             $user['followings_count'] = count($followingUsers);
             $this->load->model('streams_m', 'streamsModel');            
             $user['streams'] = $this->streamsModel->getStreamsByUserId($id);
+			
+			
+			$currentUser = $this->getUser();        
+			if($currentUser){		
+				$user_id = $currentUser['id'];
+				$this->load->model('user_follows_m', 'folowModel');
+				$followIds = $this->folowModel->getFollowIds($user_id, true);
+				if(in_array($user['id'], $followIds)){
+					$user['is_following'] = true;
+				}else{
+					$user['is_following'] = false;
+				}
+			}
+		
             echo json_encode(array('result' => true, 'object' => $user));
             die();
         }        
