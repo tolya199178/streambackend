@@ -30,7 +30,7 @@ class follow extends Backend_Controller {
     }
 	
 	
-	public function ussetfollowuser(){
+	public function unsetfollowuser(){
 		$param =  $_REQUEST;
         if(isset($param['user_id'])){
             $user_id = $param['user_id'];
