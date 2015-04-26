@@ -82,7 +82,7 @@ class user_follows_m extends CI_Model {
     }
 	public function unfollow($userId, $followId) {
         $followIds = $this->getFollowIds($userId);
-        if (in_array($followId, $followIds) == false) {
+        if (in_array($followId, $followIds) == true) {
             return $this->db->delete(self::T_NAME, array('user_id' => $userId,'follow_id' => $followId));            
         } else {
             return false;
