@@ -34,6 +34,35 @@ class post extends Backend_Controller {
         echo json_encode(array('result' => true, 'object' => $post));
         die();
     }
+	public function addposts() {
+        $param = $_REQUEST;
+        if (isset($param['user_id'])) {
+            $userId = $param['user_id'];
+        } else {
+            $user = $this->getUser();
+            $userId = $user['id'];
+        }
+		$stream_idstr = $param['stream_ids'],
+		$stream_ids = explode(',', $stream_idstr);
+		$this->load->model('posts_m', 'postModel');
+		$posts = array();
+		foreach($stream_ids as $stream_id){
+			if($stream_id){
+				$post = array(
+					'stream_id' => $stream_id,
+					'user_id' => $param['user_id'],
+					'title' => $param['title'],
+					'content' => $param['content'],
+					'image_url' => $param['image_url']?$param['image_url']:"",
+					'movie_url' => $param['movie_url']
+				);
+				$newId = $this->postModel->insertPost($post);
+				$posts[] = $this->postModel->getPostById($newId);
+			}
+		}        
+        echo json_encode(array('result' => true, 'object' => $posts));
+        die();
+    }
 
     public function updatepost() {
         $param = $_REQUEST;
