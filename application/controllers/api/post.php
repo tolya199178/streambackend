@@ -42,7 +42,7 @@ class post extends Backend_Controller {
             $user = $this->getUser();
             $userId = $user['id'];
         }
-		$stream_idstr = $param['stream_ids'],
+		$stream_idstr = $param['stream_ids'];
 		$stream_ids = explode(',', $stream_idstr);
 		$this->load->model('posts_m', 'postModel');
 		$posts = array();
